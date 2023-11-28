@@ -11,11 +11,11 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
   const menu = JSON.parse(data);
   const categorizedMenu = categorizeItems(menu);
   const sortedMenuOrder = [
-    "Starter",
-    "Main course",
-    "Side dish",
-    "Dessert",
-    "Drink",
+    "starter",
+    "main course",
+    "side dish",
+    "dessert",
+    "drink",
   ];
 
   const rl = readline.createInterface({
@@ -223,58 +223,65 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
       console.log(`${index + 1}. ${category}`);
     });
 
-    rl.question("Enter the number of the category you want to edit or 'back' to return to the main menu: ", (choiceIndex) => {
-      if (choiceIndex.toLowerCase() === "back") {
-        editMenu();
-      } else {
-        choiceIndex = parseInt(choiceIndex);
-        const selectedCategory = sortedMenuOrder[choiceIndex - 1];
+    rl.question(
+      "Enter the number of the category you want to edit or 'back' to return to the main menu: ",
+      (choiceIndex) => {
+        if (choiceIndex.toLowerCase() === "back") {
+          editMenu();
+        } else {
+          choiceIndex = parseInt(choiceIndex);
+          const selectedCategory = sortedMenuOrder[choiceIndex - 1];
 
-        if (categorizedMenu[selectedCategory]) {
-          console.log(`\nCategory: ${selectedCategory}`);
-          console.log("Items:");
-          categorizedMenu[selectedCategory].forEach((item, index) => {
-            console.log(`${index + 1}. ${item.name}`);
-          });
+          if (categorizedMenu[selectedCategory]) {
+            console.log(`\nCategory: ${selectedCategory}`);
+            console.log("Items:");
+            categorizedMenu[selectedCategory].forEach((item, index) => {
+              console.log(`${index + 1}. ${item.name}`);
+            });
 
-          rl.question(
-            'Enter the number of the item you want to remove or "back" to return to the category list: ',
-            (itemIndex) => {
-              if (itemIndex.toLowerCase() === "back") {
-                removeItem();
-              } else {
-                const selectedItem =
-                  categorizedMenu[selectedCategory][parseInt(itemIndex) - 1];
-
-                const indexInMenu = menu.findIndex(
-                  (item) => item.name === selectedItem.name
-                );
-
-                if (indexInMenu !== -1) {
-                  menu.splice(indexInMenu, 1);
-
-                  fs.writeFile(
-                    menuFilePath,
-                    JSON.stringify(menu, null, 2),
-                    "utf8",
-                    () => {
-                      console.log(`${selectedItem.name} has been removed from the menu.`);
-                      removeItem();
-                    }
-                  );
-                } else {
-                  console.error(`Item ${selectedItem.name} not found in the menu.`);
+            rl.question(
+              'Enter the number of the item you want to remove or "back" to return to the category list: ',
+              (itemIndex) => {
+                if (itemIndex.toLowerCase() === "back") {
                   removeItem();
+                } else {
+                  const selectedItem =
+                    categorizedMenu[selectedCategory][parseInt(itemIndex) - 1];
+
+                  const indexInMenu = menu.findIndex(
+                    (item) => item.name === selectedItem.name
+                  );
+
+                  if (indexInMenu !== -1) {
+                    menu.splice(indexInMenu, 1);
+
+                    fs.writeFile(
+                      menuFilePath,
+                      JSON.stringify(menu, null, 2),
+                      "utf8",
+                      () => {
+                        console.log(
+                          `${selectedItem.name} has been removed from the menu.`
+                        );
+                        removeItem();
+                      }
+                    );
+                  } else {
+                    console.error(
+                      `Item ${selectedItem.name} not found in the menu.`
+                    );
+                    removeItem();
+                  }
                 }
               }
-            }
-          );
-        } else {
-          console.error("Selected category does not exist.");
-          editMenu();
+            );
+          } else {
+            console.error("Selected category does not exist.");
+            editMenu();
+          }
         }
       }
-    });
+    );
   }
 
   function finalizeOrder() {
