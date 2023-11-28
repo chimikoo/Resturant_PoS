@@ -1,9 +1,16 @@
-## Resturant_CLI
+# Restaurant PoS System (Using CLI for interactivity while in early development)
 
-Currently working on a Resturant CLI system or a Point of Sale system.
+## Modules
 
-Plan is to make it modular with different modules here is the current idea's for modules:
+1. **Point of Sale System** - Currently being worked on.
+2. **Track Employee Work Time** - Not implemented.
+3. **Cloud Based** - Not implemented.
 
-1.) Point of Sale System - Currently being worked at.
-2.) Track employee work time - Not implemanted
-3.) Cloud Based - Not implemanted
+## Project Details
+
+My goal is to create a user-friendly PoS system for resturant managers and waiter/waiterss, I want it to be so easy that anyone can use it.
+I worked in Resturants for many years and we always had issues with our Point of sale, 
+
+## Contributing
+
+This is a project for my JavaScript course on DCI - Germany. So any help is appriciated but if you contribute make sure that you include a fairly easy to understand explenation of your code so a new JS developer can understand it!
