@@ -1,0 +1,307 @@
+[
+  {
+    "name": "Green Salad",
+    "category": "starter",
+    "price": 4.99,
+    "isVegetarian": true,
+    "isVegan": true
+  },
+  {
+    "name": "Bruschetta",
+    "category": "starter",
+    "price": 6.99,
+    "isVegetarian": true,
+    "isVegan": true
+  },
+  {
+    "name": "Caprese Skewers",
+    "category": "starter",
+    "price": 5.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Shrimp Cocktail",
+    "category": "starter",
+    "price": 8.99,
+    "isVegetarian": false,
+    "isVegan": false
+  },
+  {
+    "name": "Edamame Beans",
+    "category": "starter",
+    "price": 3.99,
+    "isVegetarian": true,
+    "isVegan": true
+  },
+  {
+    "name": "Chocolate Fondue",
+    "category": "dessert",
+    "price": 9.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Apple Pie",
+    "category": "dessert",
+    "price": 7.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Warm Brownie Sundae",
+    "category": "dessert",
+    "price": 8.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Creme Brulee",
+    "category": "dessert",
+    "price": 10.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Mixed Berry Cobbler",
+    "category": "dessert",
+    "price": 6.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Vegetarian Pasta Primavera",
+    "category": "main course",
+    "price": 12.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Grilled Vegetable Stir-Fry",
+    "category": "main course",
+    "price": 11.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Chicken Alfredo",
+    "category": "main course",
+    "price": 14.99,
+    "isVegetarian": false,
+    "isVegan": false
+  },
+  {
+    "name": "Vegan Lentil Curry",
+    "category": "main course",
+    "price": 13.99,
+    "isVegetarian": false,
+    "isVegan": true
+  },
+  {
+    "name": "Beef Stroganoff",
+    "category": "main course",
+    "price": 16.99,
+    "isVegetarian": false,
+    "isVegan": false
+  },
+  {
+    "name": "Vegan Chickpea Stir-Fry",
+    "category": "main course",
+    "price": 15.99,
+    "isVegetarian": false,
+    "isVegan": true
+  },
+  {
+    "name": "Salmon Teriyaki",
+    "category": "main course",
+    "price": 18.99,
+    "isVegetarian": false,
+    "isVegan": false
+  },
+  {
+    "name": "Vegetarian Lasagna",
+    "category": "main course",
+    "price": 17.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Shrimp Scampi",
+    "category": "main course",
+    "price": 19.99,
+    "isVegetarian": false,
+    "isVegan": false
+  },
+  {
+    "name": "Vegan Eggplant Parmesan",
+    "category": "main course",
+    "price": 20.99,
+    "isVegetarian": false,
+    "isVegan": true
+  },
+  {
+    "name": "Red Wine",
+    "category": "drink",
+    "type": "wine",
+    "big": {
+      "size": "750ml",
+      "price": 24.99
+    },
+    "small": {
+      "size": "375ml",
+      "price": 12.99
+    }
+  },
+  {
+    "name": "White Wine",
+    "category": "drink",
+    "type": "wine",
+    "big": {
+      "size": "750ml",
+      "price": 27.99
+    },
+    "small": {
+      "size": "375ml",
+      "price": 14.99
+    }
+  },
+  {
+    "name": "IPA Beer",
+    "category": "drink",
+    "type": "beer",
+    "big": {
+      "size": "500ml",
+      "price": 7.99
+    },
+    "small": {
+      "size": "330ml",
+      "price": 5.99
+    }
+  },
+  {
+    "name": "Stout Beer",
+    "category": "drink",
+    "type": "beer",
+    "big": {
+      "size": "500ml",
+      "price": 8.99
+    },
+    "small": {
+      "size": "330ml",
+      "price": 6.99
+    }
+  },
+  {
+    "name": "Whiskey",
+    "category": "drink",
+    "type": "strong alcoholic spirit",
+    "big": {
+      "size": "750ml",
+      "price": 29.99
+    },
+    "small": {
+      "size": "375ml",
+      "price": 15.99
+    }
+  },
+  {
+    "name": "Vodka",
+    "category": "drink",
+    "type": "strong alcoholic spirit",
+    "big": {
+      "size": "750ml",
+      "price": 26.99
+    },
+    "small": {
+      "size": "375ml",
+      "price": 13.99
+    }
+  },
+  {
+    "name": "Tequila Shots",
+    "category": "drink",
+    "type": "shots",
+    "big": {
+      "size": "50ml",
+      "price": 4.99
+    },
+    "small": {
+      "size": "25ml",
+      "price": 2.99
+    }
+  },
+  {
+    "name": "Gin",
+    "category": "drink",
+    "type": "strong alcoholic spirit",
+    "big": {
+      "size": "750ml",
+      "price": 25.99
+    },
+    "small": {
+      "size": "375ml",
+      "price": 13.49
+    }
+  },
+  {
+    "name": "Margarita",
+    "category": "drink",
+    "type": "strong alcoholic spirit",
+    "big": {
+      "size": "500ml",
+      "price": 10.99
+    },
+    "small": {
+      "size": "250ml",
+      "price": 5.99
+    }
+  },
+  {
+    "name": "Rum Shots",
+    "category": "drink",
+    "type": "shots",
+    "big": {
+      "size": "50ml",
+      "price": 5.99
+    },
+    "small": {
+      "size": "25ml",
+      "price": 3.49
+    }
+  },
+  {
+    "name": "Garlic Parmesan Fries",
+    "category": "side dish",
+    "price": 4.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Onion Rings",
+    "category": "side dish",
+    "price": 3.99,
+    "isVegetarian": true,
+    "isVegan": false
+  },
+  {
+    "name": "Steamed Vegetables",
+    "category": "side dish",
+    "price": 4.49,
+    "isVegetarian": true,
+    "isVegan": true
+  },
+  {
+    "name": "Sweet Potato Fries",
+    "category": "side dish",
+    "price": 4.99,
+    "isVegetarian": true,
+    "isVegan": true
+  },
+  {
+    "name": "Ice Cream",
+    "category": "dessert",
+    "price": 4.99,
+    "isVegetarian": false,
+    "isVegan": false
+  }
+]
