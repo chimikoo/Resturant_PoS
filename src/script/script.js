@@ -81,7 +81,8 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
       categorizedMenu[selectedCategory].forEach((item, index) => {
         console.log(`
         |------------------------------|
-        | ${index + 1}. ${item.name}\n                          
+        | ${index + 1}. ${item.name}
+        |                          
         | Price: €${item.price}                                 
         | Vegan: ${item.isVegan ? "Yes" : "No"}           
         | Vegetarian: ${item.isVegetarian ? "Yes" : "No"} 
