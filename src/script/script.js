@@ -72,23 +72,37 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
   function displayCategoryItems(choiceIndex) {
     choiceIndex = parseInt(choiceIndex);
     const selectedCategory = sortedMenuOrder[choiceIndex - 1];
-
+  
     if (categorizedMenu[selectedCategory]) {
       console.log(`\nCategory: ${selectedCategory}`);
       console.log("Items:");
       categorizedMenu[selectedCategory].forEach((item, index) => {
-        console.log(`
-        |------------------------------|
-        | ${index + 1}. ${item.name}
-        |                          
-        | Price: €${item.price}                                 
-        | Vegan: ${item.isVegan ? "Yes" : "No"}           
-        | Vegetarian: ${item.isVegetarian ? "Yes" : "No"} 
-        |------------------------------|
+        if (
+          item.category === "drink" &&
+          item.hasOwnProperty("big") &&
+          item.hasOwnProperty("small")
+        ) {
+          console.log(`
+          |------------------------------|
+          | ${index + 1}. ${item.name}
+          |                                                         
+          | Big Size: ${item.big.size} - €${item.big.price}          
+          | Small Size: ${item.small.size} - €${item.small.price} 
+          |------------------------------|
         `);
-        
+        } else {
+          console.log(`
+          |------------------------------|
+          | ${index + 1}. ${item.name}
+          |                          
+          | Price: €${item.price}                                 
+          | Vegan: ${item.isVegan ? "Yes" : "No"}           
+          | Vegetarian: ${item.isVegetarian ? "Yes" : "No"} 
+          |------------------------------|
+        `);
+        }
       });
-
+  
       rl.question(
         'Enter the number of the item you want to add to the cart or "back" to return to the category list: ',
         (itemIndex) => {
@@ -97,7 +111,7 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
           } else {
             const selectedItem =
               categorizedMenu[selectedCategory][parseInt(itemIndex) - 1];
-
+  
             if (
               selectedItem.category === "drink" &&
               selectedItem.hasOwnProperty("big") &&
