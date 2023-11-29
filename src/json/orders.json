@@ -257,5 +257,61 @@
         "price": 12.99
       }
     ]
+  },
+  {
+    "name": "Order 7",
+    "tableNumber": "48",
+    "items": [
+      {
+        "name": "Green Salad",
+        "category": "starter",
+        "price": 4.99,
+        "isVegetarian": true,
+        "isVegan": true
+      },
+      {
+        "name": "Bruschetta",
+        "category": "starter",
+        "price": 6.99,
+        "isVegetarian": true,
+        "isVegan": true
+      },
+      {
+        "name": "Vegan Eggplant Parmesan",
+        "category": "main course",
+        "price": 20.99,
+        "isVegetarian": false,
+        "isVegan": true
+      },
+      {
+        "name": "Ice Cream",
+        "category": "dessert",
+        "price": 4.99,
+        "isVegetarian": false,
+        "isVegan": false
+      },
+      {
+        "name": "Ice Cream",
+        "category": "dessert",
+        "price": 4.99,
+        "isVegetarian": false,
+        "isVegan": false
+      },
+      {
+        "name": "Rum Shots",
+        "category": "drink",
+        "type": "shots",
+        "big": {
+          "size": "50ml",
+          "price": 5.99
+        },
+        "small": {
+          "size": "25ml",
+          "price": 3.49
+        },
+        "size": "big",
+        "price": 5.99
+      }
+    ]
   }
 ]

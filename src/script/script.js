@@ -51,7 +51,7 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
     });
 
     rl.question(
-      'Enter the number of the category you want to display, "cart" to view the cart, "order" to finalize the order, "view orders" to view all orders, or "edit" to edit the menu: ',
+      'Enter the number of the category you want to display, "cart" to view the cart, "order" to finalize the order or "view orders" to view all orders: ',
       (choiceIndex) => {
         if (choiceIndex.toLowerCase() === "back") {
           displayMenu();
@@ -62,8 +62,6 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
           finalizeOrder();
         } else if (choiceIndex.toLowerCase() === "view orders") {
           viewOrders();
-        } else if (choiceIndex.toLowerCase() === "edit") {
-          editMenu();
         } else {
           displayCategoryItems(choiceIndex);
         }
