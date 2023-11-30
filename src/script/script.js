@@ -165,23 +165,29 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
     console.log("2. Edit Menu (admin)");
     console.log("3. View All Orders");
     console.log("4. Exit");
-
-    rl.question("Enter the option number: ", (option) => {
-      if (option === "1") {
-        console.clear()
-        viewCategories();
-      } else if (option === "2") {
-        console.clear()
-        editMenu();
-      } else if (option === "3") {
-        console.clear()
-        viewOrders();
-      } else if (option === "4") {
-        rl.close();
-      } else {
-        console.clear()
-        console.error("Invalid option. Please enter a valid option number.");
-        displayMenu();
+  
+    rl.question("\nEnter the option number\n> ", (option) => {
+      switch (option) {
+        case "1":
+          console.clear();
+          viewCategories();
+          break;
+        case "2":
+          console.clear();
+          editMenu();
+          break;
+        case "3":
+          console.clear();
+          viewOrders();
+          break;
+        case "4":
+          rl.close();
+          break;
+        default:
+          console.clear();
+          console.error("Invalid option. Please enter a valid option number.");
+          displayMenu();
+          break;
       }
     });
   }
@@ -191,20 +197,26 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
     console.log("1. Add item to Menu");
     console.log("2. Remove item");
     console.log("3. Back to the main menu");
-
+  
     rl.question("Enter the option number: ", (option) => {
-      if (option === "1") {
-        addItemToMenu();
-      } else if (option === "2") {
-        removeItem();
-      } else if (option === "3") {
-        displayMenu();
-      } else {
-        console.error("Invalid option. Please enter a valid option number.");
-        editMenu();
+      switch (option) {
+        case "1":
+          addItemToMenu();
+          break;
+        case "2":
+          removeItem();
+          break;
+        case "3":
+          displayMenu();
+          break;
+        default:
+          console.error("Invalid option. Please enter a valid option number.");
+          editMenu();
+          break;
       }
     });
   }
+  
 
   function addItemToMenu() {
     rl.question("Enter the name of the item you want to add: ", (itemName) => {
