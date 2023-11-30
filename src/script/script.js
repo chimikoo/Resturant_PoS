@@ -9,7 +9,6 @@ const shoppingCart = [];
 
 fs.readFile(menuFilePath, "utf8", (_err, data) => {
   const menu = JSON.parse(data);
-  const categorizedMenu = categorizeItems(menu);
   const sortedMenuOrder = [
     "starter",
     "main course",
@@ -18,6 +17,8 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
     "drink",
   ];
 
+  const categorizedMenu = categorizeItems(menu);
+
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -25,12 +26,17 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
 
   displayMenu();
 
-  function addToCart(item) {
-    shoppingCart.push(item);
-    console.log(`${item.name} has been added to the cart.`);
+  function categorizeItems(menu) {
+    return menu;
+  }
+
+  function addToCart(selectedItem) {
+    shoppingCart.push(selectedItem);
+    console.log(`\n${selectedItem.name} has been added to the order.`);
   }
 
   function viewCart() {
+    console.clear();
     console.log("\nShopping Cart:");
     if (shoppingCart.length === 0) {
       console.log("The cart is empty.");
@@ -51,18 +57,26 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
     });
 
     rl.question(
-      'Enter the number of the category you want to display, "cart" to view the cart, "order" to finalize the order or "view orders" to view all orders: ',
+      `Enter the number of the category you want to display\n\n"cart" to view the cart\n"order" to finalize the order\n"back" to go back to main menu\n\n> `,
       (choiceIndex) => {
         if (choiceIndex.toLowerCase() === "back") {
+          console.clear()
           displayMenu();
         } else if (choiceIndex.toLowerCase() === "cart") {
+          console.clear()
           viewCart();
           viewCategories();
         } else if (choiceIndex.toLowerCase() === "order") {
+          console.clear()
           finalizeOrder();
         } else if (choiceIndex.toLowerCase() === "view orders") {
+          console.clear()
           viewOrders();
+        } else if (choiceIndex.toLowerCase() === "edit") {
+          console.clear()
+          editMenu();
         } else {
+          console.clear()
           displayCategoryItems(choiceIndex);
         }
       }
@@ -72,54 +86,48 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
   function displayCategoryItems(choiceIndex) {
     choiceIndex = parseInt(choiceIndex);
     const selectedCategory = sortedMenuOrder[choiceIndex - 1];
-  
+
     if (categorizedMenu[selectedCategory]) {
       console.log(`\nCategory: ${selectedCategory}`);
-      console.log("Items:");
       categorizedMenu[selectedCategory].forEach((item, index) => {
-        if (
-          item.category === "drink" &&
-          item.hasOwnProperty("big") &&
-          item.hasOwnProperty("small")
-        ) {
+        if(item.hasOwnProperty("sizes")) {
           console.log(`
-          |------------------------------|
-          | ${index + 1}. ${item.name}
-          |                                                         
-          | Big Size: ${item.big.size} - €${item.big.price}          
-          | Small Size: ${item.small.size} - €${item.small.price} 
-          |------------------------------|
-        `);
+          ${index + 1}. ${item.name}
+          Glass: €${item.sizes.small.price}
+          Bottle: €${item.sizes.big.price}`); // Handle items with different sizes (drinks)
         } else {
           console.log(`
-          |------------------------------|
-          | ${index + 1}. ${item.name}
-          |                          
-          | Price: €${item.price}                                 
-          | Vegan: ${item.isVegan ? "Yes" : "No"}           
-          | Vegetarian: ${item.isVegetarian ? "Yes" : "No"} 
-          |------------------------------|
-        `);
+          ${index + 1}. ${item.name} 
+          Price: €${item.price}
+          Vegetarian: ${item.isVegetarian ? "Yes" : "No"}
+          Vegan: ${item.isVegan ? "Yes" : "No"}
+          `); // normal menu items dessert etc
         }
       });
-  
+
       rl.question(
-        'Enter the number of the item you want to add to the cart or "back" to return to the category list: ',
-        (itemIndex) => {
-          if (itemIndex.toLowerCase() === "back") {
+        'Enter the number of the item you want to add to the cart or "back" to return to the category list\n: ',
+        (input) => {
+          if (input.toLowerCase() === "back") {
+            console.clear()
             viewCategories();
+          } else if (input.toLowerCase() === "size") {
+            askForDrinkSize();
           } else {
-            const selectedItem =
-              categorizedMenu[selectedCategory][parseInt(itemIndex) - 1];
-  
-            if (
-              selectedItem.category === "drink" &&
-              selectedItem.hasOwnProperty("big") &&
-              selectedItem.hasOwnProperty("small")
-            ) {
-              askForDrinkSize(selectedItem);
+            const selectedItemIndex = parseInt(input) - 1;
+            if(selectedItemIndex >= 0 && selectedItemIndex < categorizedMenu[selectedCategory].length) {
+              const selectedItem = categorizedMenu[selectedCategory][selectedItemIndex];
+
+              if (selectedItem.hasOwnProperty("sizes")) {
+                askForDrinkSize(selectedItem);
+              } else {
+                addToCart(selectedItem);
+                console.clear()
+                displayCategoryItems(choiceIndex);
+                console.log(`\n${selectedItem.name} has been added to the order.`);
+              }
             } else {
-              addToCart(selectedItem);
+              console.error("Invalid item number. Please enter a valid number.");
               displayCategoryItems(choiceIndex);
             }
           }
@@ -129,7 +137,7 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
       console.error("Selected category does not exist.");
       displayMenu();
     }
-  }
+}
 
   function askForDrinkSize(selectedItem) {
     rl.question(
@@ -139,16 +147,12 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
           const drinkItem = {
             ...selectedItem,
             size: size.toLowerCase(),
-            price: selectedItem[size.toLowerCase()].price,
+            price: selectedItem.sizes[size.toLowerCase()].price,
           };
           addToCart(drinkItem);
-          displayCategoryItems(
-            sortedMenuOrder.indexOf(selectedItem.category) + 1
-          );
+          displayCategoryItems(sortedMenuOrder.indexOf(selectedItem.category) + 1);
         } else {
-          console.error(
-            'Invalid size selection. Please enter "big" or "small".'
-          );
+          console.error('Invalid size selection. Please enter "big" or "small".');
           askForDrinkSize(selectedItem);
         }
       }
@@ -164,14 +168,18 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
 
     rl.question("Enter the option number: ", (option) => {
       if (option === "1") {
+        console.clear()
         viewCategories();
       } else if (option === "2") {
+        console.clear()
         editMenu();
       } else if (option === "3") {
+        console.clear()
         viewOrders();
       } else if (option === "4") {
         rl.close();
       } else {
+        console.clear()
         console.error("Invalid option. Please enter a valid option number.");
         displayMenu();
       }
@@ -201,31 +209,34 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
   function addItemToMenu() {
     rl.question("Enter the name of the item you want to add: ", (itemName) => {
       rl.question(
-        "Enter the category of the item (starter, main course, side dish, dessert, or drink): ",
+        "Enter the category of the item (starter, main course, side dish, dessert, drink): ",
         (itemCategory) => {
+          if (!menu[itemCategory]) {
+            console.error("Invalid category. Please enter a valid category.");
+            addItemToMenu();
+            return;
+          }
           rl.question("Enter the price of the item: ", (itemPrice) => {
             const price = parseFloat(itemPrice);
-
             rl.question(
               "Is the item vegetarian? (yes/no): ",
               (isVegetarian) => {
                 rl.question("Is the item vegan? (yes/no): ", (isVegan) => {
                   const newItem = {
                     name: itemName,
-                    category: itemCategory.toLowerCase(),
                     price: price,
                     isVegetarian: isVegetarian.toLowerCase() === "yes",
                     isVegan: isVegan.toLowerCase() === "yes",
                   };
 
-                  menu.push(newItem);
+                  menu[itemCategory].push(newItem);
 
                   fs.writeFile(
                     menuFilePath,
                     JSON.stringify(menu, null, 2),
                     "utf8",
                     () => {
-                      console.log(`${itemName} has been added to the menu.`);
+                      console.log(`${itemName} has been added to the ${itemCategory}.`);
                       editMenu();
                     }
                   );
@@ -239,70 +250,34 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
   }
 
   function removeItem() {
-    console.log("\nAvailable Categories:");
-    sortedMenuOrder.forEach((category, index) => {
-      console.log(`${index + 1}. ${category}`);
-    });
-
-    rl.question(
-      "Enter the number of the category you want to edit or 'back' to return to the main menu: ",
-      (choiceIndex) => {
-        if (choiceIndex.toLowerCase() === "back") {
-          editMenu();
-        } else {
-          choiceIndex = parseInt(choiceIndex);
-          const selectedCategory = sortedMenuOrder[choiceIndex - 1];
-
-          if (categorizedMenu[selectedCategory]) {
-            console.log(`\nCategory: ${selectedCategory}`);
-            console.log("Items:");
-            categorizedMenu[selectedCategory].forEach((item, index) => {
-              console.log(`${index + 1}. ${item.name}`);
-            });
-
-            rl.question(
-              'Enter the number of the item you want to remove or "back" to return to the category list: ',
-              (itemIndex) => {
-                if (itemIndex.toLowerCase() === "back") {
-                  removeItem();
-                } else {
-                  const selectedItem =
-                    categorizedMenu[selectedCategory][parseInt(itemIndex) - 1];
-
-                  const indexInMenu = menu.findIndex(
-                    (item) => item.name === selectedItem.name
-                  );
-
-                  if (indexInMenu !== -1) {
-                    menu.splice(indexInMenu, 1);
-
-                    fs.writeFile(
-                      menuFilePath,
-                      JSON.stringify(menu, null, 2),
-                      "utf8",
-                      () => {
-                        console.log(
-                          `${selectedItem.name} has been removed from the menu.`
-                        );
-                        removeItem();
-                      }
-                    );
-                  } else {
-                    console.error(
-                      `Item ${selectedItem.name} not found in the menu.`
-                    );
-                    removeItem();
-                  }
-                }
-              }
-            );
-          } else {
-            console.error("Selected category does not exist.");
-            editMenu();
-          }
-        }
+    rl.question("Enter the category from which to remove an item: ", (category) => {
+      if (!menu[category]) {
+        console.error("Invalid category. Please enter a valid category.");
+        removeItem();
+        return;
       }
-    );
+
+      console.log(`\nItems in ${category}:`);
+      menu[category].forEach((item, index) => {
+        console.log(`${index + 1}. ${item.name}`);
+      });
+
+      rl.question("Enter the number of the item you want to remove: ", (itemIndex) => {
+        itemIndex = parseInt(itemIndex) - 1;
+        if (itemIndex < 0 || itemIndex >= menu[category].length) {
+          console.error("Invalid item number. Please enter a valid number.");
+          removeItem();
+          return;
+        }
+
+        const removedItem = menu[category].splice(itemIndex, 1)[0];
+
+        fs.writeFile(menuFilePath, JSON.stringify(menu, null, 2), "utf8", () => {
+          console.log(`${removedItem.name} has been removed from the ${category}.`);
+          editMenu();
+        });
+      });
+    });
   }
 
   function finalizeOrder() {
@@ -398,15 +373,9 @@ fs.readFile(menuFilePath, "utf8", (_err, data) => {
 
   function categorizeItems(menu) {
     const categories = {};
-
-    menu.forEach((item) => {
-      const category = item.category.toLowerCase();
-      if (!categories[category]) {
-        categories[category] = [];
-      }
-      categories[category].push(item);
+    Object.keys(menu).forEach((category) => {
+      categories[category] = menu[category];
     });
-
     return categories;
   }
 });
